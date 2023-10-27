@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+
+<h1>Все объявления</h1>
+                <p>Количество всех объявлений: {{ posts | length }}</p>
+                    <hr>
+                    {% for post in posts %}
+                        <small class="fw-bold">Дата: {{ post.date_post | date:"d.m.Y" }}</small>
+                        <small class="text-muted">Автор: {{ post.author_post }}</small>
+                        <small class="fw-bold">Категория: {{ post.category_post }}</small>
+                        <h5><b>{{ post.title_post | truncatewords:15 }}</b></h5>
+                        {{ post.text_post | safe }}
+                        <style>
+                        /* Стили кнопки */
+                        .main_button{display: inline-block;cursor: pointer; font-size:15px;text-decoration:none;padding:5px 10px; color:#000000;background:#e0e0e0;border-radius:5px;border:1px solid #000000;}
+                        .main_button:hover{background:#4d4d4d;color:#ffffff;border:1px solid #000000;transition: all 0.2s ease;}
+                        </style>
+                        <div align="center"><a class="main_button" href="{{ post.get_absolute_url }}" title="Прочитать">Прочитать</a></div>
+                    <hr>
+                    {% endfor %}
+                    {% if posts == 0 %}
+                        {{ amount_posts | default_if_none:'Нет объявлений' }}
+                    {% endif %}
+
+{% endblock content %}
